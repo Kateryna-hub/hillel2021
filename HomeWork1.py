@@ -3,10 +3,7 @@ from django.core.management import execute_from_command_line
 from django.http import HttpResponse
 from django.urls import path 
 from django.conf import settings
-from django.shortcuts import render
-import this
 from stdlib_list import stdlib_list
-from random import choice
 #URL
 # https://docs.python.org 
 
@@ -25,15 +22,11 @@ TEMPLATE = """
     </body>
 </html>
 """
-text = ''.join(this.d.get(c, c) for c in this.s)
-title, _, *quotes = text.splitlines()
-
 
 def handler_index(request):
     link = '<a href="doc/">{}</a>'.format('Python standard library')
     return HttpResponse(TEMPLATE.format(message=link,
                                         content=''))
-
 
 def handler(request):
     list_modules = [name for name in stdlib_list()
@@ -41,7 +34,6 @@ def handler(request):
     links = ['<a href="{}">{}</a><br>'.format(name, name) for name in list_modules]
     return HttpResponse(TEMPLATE.format(message='Python standard library',
                                         content=''.join(links)))
-
 
 def mod_handler(request, mod_name):
     try:
@@ -53,7 +45,6 @@ def mod_handler(request, mod_name):
         raise Http404("Module does not exist")
     return HttpResponse(TEMPLATE.format(message=mod_name,
                                         content=''.join(links)))
-
 
 def obj_handler(request,mod_name, obj_name):
     try:
